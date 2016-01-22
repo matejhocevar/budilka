@@ -1,0 +1,44 @@
+<!--<a ui-sref="newMovie" class="btn-primary btn-lg nodecoration">Add New Movie</a>-->
+<h3>Vsi dogodki</h3>
+
+
+<md-list-item class="md-3-line" ng-repeat="item in dogodki" ng-href="#!/dogodki/{{ item.id }}">
+	<div class="md-list-item-text" layout="column">
+		<h3>Dogodek #{{ item.id }} {{item.name}} ({{item.location}})</h3>
+		<h4>{{item.time}}</h4>
+	</div>
+</md-list-item>
+
+<style type="text/css">
+.groupX {
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 3px 15px 3px 15px;
+    color: rgb(49, 46, 46);
+    background-color: rgba(224, 224, 224, 0.96);
+    text-transform: none;
+    font-weight: 400;
+    min-width:20px;
+}
+.md-button.left {
+    border-radius: 10px 0 0 10px;
+}
+.md-button.middle {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+}
+.md-button.right {
+    border-radius: 0 10px 10px 0;
+}
+.md-button:not([disabled]):hover {
+    background-color: rgba(193, 193, 193, 0.96);
+    color: rgba(44, 65, 164, 0.96);
+    transition: 0.3s;
+}
+</style>
+<div>
+<section layout="row" layout-sm="column" layout-align="center center" ng-hide="izposoja.length == 0">
+  <md-button class="groupX" ng-class="whatClassIsIt(it)" ng-repeat="it in pages" ng-click="loadFunction(it)">{{it}}</md-button>
+</section>
+</div>

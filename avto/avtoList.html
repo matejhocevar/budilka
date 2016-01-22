@@ -1,0 +1,27 @@
+<!--<a ui-sref="newMovie" class="btn-primary btn-lg nodecoration">Add New Movie</a>-->
+<h3>Vsi avtomobili</h3>
+
+
+<md-card ng-repeat="avto in avtomobili">
+	<div style="width:500px">
+		<img ng-src="{{avto.slika?avto.slika:'https://cdn4.iconfinder.com/data/icons/car-silhouettes/1000/sedan-512.png'}}" class="md-card-image" alt="Washed Out">
+	</div>
+	<md-toolbar class="md-warn" ng-show="avto.status==0">
+   		<div class="md-toolbar-tools">
+      		<h2 class="md-flex">Pokvarjen</h2>
+    	</div>
+  	</md-toolbar>
+	<md-card-title>
+		<md-card-title-text>
+			<span class="md-headline">{{avto.naziv}}</span>
+		</md-card-title-text>
+	</md-card-title>
+	<md-card-content>
+		<p>
+			{{avto.reg}}
+		</p>
+	</md-card-content>
+		<md-card-actions layout="row" layout-align="end center">
+		<md-button class="md-raised" ng-href="#!/avto/{{avto.avtoId}}">Poglej & Uredi</md-button>
+	</md-card-actions>
+</md-card>

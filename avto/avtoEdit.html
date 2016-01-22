@@ -1,0 +1,44 @@
+<h3>Details for {{avto.naziv}}</h3>
+<div style="width:500px">
+    <img ng-src="{{avto.slika?avto.slika:'https://cdn4.iconfinder.com/data/icons/car-silhouettes/1000/sedan-512.png'}}" class="md-card-image" width="500px" alt="Washed Out">
+  </div>
+  <div>
+    <md-input-container>
+        <label>Avto Id</label>
+        <input ng-model="avto.avtoId" disabled>
+      </md-input-container>
+      </div>
+      <div>
+      <md-input-container>
+        <label>Naziv</label>
+        <input ng-model="avto.naziv">
+      </md-input-container>
+  </div>
+  <div>
+      <md-input-container>
+        <label>Registrska tablica</label>
+        <input ng-model="avto.reg">
+      </md-input-container>
+  </div>
+  <div>
+      <md-input-container>
+        <label>Letnik</label>
+        <md-select ng-model="avto.letnik">
+          <md-option ng-repeat="leto in [2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015]" value="{{leto}}">
+            {{leto}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+  </div>
+  <div>
+      <md-input-container>          
+      <md-checkbox ng-model="avto.status" aria-label="Checkbox" ng-true-value="1" ng-false-value="0" flex>Status: {{avto.status==1?'OK':'Pokvarjen'}}
+      </md-input-container>
+  </div>
+
+<div>
+  <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+    <md-button class="md-raised md-primary" ng-click="urediAvto()" >Uredi</md-button>
+    <md-button class="md-raised md-warn" ng-href="#!/avto/{{avto.avtoId}}">Prekini</md-button>
+  </section>
+</div>

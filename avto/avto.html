@@ -1,0 +1,45 @@
+<div>
+  <h3>Details for {{avto.naziv}}</h3>
+  <md-button class="md-raised" ng-href="#!/avto/{{avto.avtoId}}/edit">Uredi</md-button>
+</div>
+<div style="width:500px">
+    <img ng-src="{{avto.slika?avto.slika:'https://cdn4.iconfinder.com/data/icons/car-silhouettes/1000/sedan-512.png'}}" class="md-card-image" width="500px" alt="Washed Out">
+  </div>
+<table class="table movietable">
+  <tr>
+    <td>Avto Id</td>
+    <td>{{avto.avtoId}}</td>
+  </tr>
+  <tr>
+    <td>Naziv</td>
+    <td>{{avto.naziv}}</td>
+  </tr>
+  <tr>
+    <td>Registrska</td>
+    <td>{{avto.reg}}</td>
+  </tr>
+  <tr>
+    <td>Stataus</td>
+    <td>{{avto.status==1?'OK':'Pokvarjen'}}</td>
+  </tr>
+  <tr>
+    <td>Letnik</td>
+    <td>{{avto.letnik}}</td>
+  </tr>
+</table>
+<h4>Izposoje</h4>
+<table class="table movietable">
+  <tr class="strong">
+    <td>Izposoja #</td>
+    <td>začetek</td>
+    <td>konec</td>
+    <td>voznik</td>
+  </tr>
+
+  <tr ng-repeat="i in avtoIzposoja">
+    <td><a ng-href="/#!/izposoja/{{i.izposojaId}}">{{i.izposojaId}}</a></td>
+    <td>{{i.zacetek | date:'dd.MM.yyyy'}}</td>
+    <td>{{i.konec | date:'dd.MM.yyyy'}}</td>
+    <td>{{i.voznik.ime}} {{i.voznik.priimek}} ({{i.voznik.dokument}})</td>
+  </tr>
+</table>

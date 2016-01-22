@@ -1,0 +1,24 @@
+<div align="center">
+	<div>
+		<h3>Details for Izposoja #{{izposoja.izposojaId}}</h3>
+	</div>
+	<table class="table movietable">
+		<tr>
+			<td>Avto</td>
+			<td><a ng-href="#!/avto/{{izposoja.avto.avtoId}}">{{izposoja.avto.naziv}} ({{izposoja.avto.reg}})</a> </td>
+		</tr>
+		<tr>
+			<td>Od</td>
+			<td>{{izposoja.zacetek | date:'dd.MM.yyyy'}}</td>
+		</tr>
+		<tr>
+			<td>Do</td>
+			<td>{{izposoja.zacetek | date:'dd.MM.yyyy'}}</td>
+		</tr>
+		<tr>
+			<td>Voznik</td>
+			<td>{{izposoja.voznik.ime}} {{izposoja.voznik.priimek}} ({{izposoja.voznik.dokument}})</td>
+		</tr>
+	</table>
+	<md-button class="md-raised md-warn" ng-click="showConfirm($event)">Izbriši</md-button>
+</div>
