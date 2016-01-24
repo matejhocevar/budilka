@@ -201,14 +201,30 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 		if ($scope.eventDate == null) {
 			return false;
 		}
+		else {
+			if ($scope.eventDate instanceof Date != true) {
+				return false;
+			} 
+		}
 		if ($scope.eventTime == null) {
 			return false;
 		}
-		if ($scope.eventlocation == null) {
+		else {
+			if ($scope.eventTime instanceof Date != true) {
+				return false;
+			} 
+		}
+		if ($scope.eventLocation == null) {
 			return false;
 		}
 		if ($scope.eventUser == null) {
 			return false;
+		}
+		else {
+			var regex = new RegExp('^[0-9]+$');
+			if (regex.test($scope.eventUser) == false) {
+				return false;
+			}
 		}
 		return true;
 	}

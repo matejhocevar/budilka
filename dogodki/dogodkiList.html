@@ -3,10 +3,7 @@
 
 
 <md-list-item class="md-3-line" ng-repeat="dogodek in dogodki" ng-href="#!/dogodki/{{ dogodek.id }}">
-	<div class="md-list-item-text" layout="column">
-		<h3>Dogodek #{{ dogodek.id }} {{dogodek.name}} ({{dogodek.location}})</h3>
-		<h4>{{dogodek.time | date:'dd.MM.yyyy hh:mm'}}</h4>
-	</div>
+    <dogodek-summery dogodek="dogodek"></dogodek-summery> 
 </md-list-item>
 
 <style type="text/css">
