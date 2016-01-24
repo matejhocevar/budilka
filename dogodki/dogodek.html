@@ -1,20 +1,32 @@
 <div align="center">
 	<div>
-		<h3>Details for Dogodek #{{dogodek.id}}</h3>
+		<h3>Details for Dogodek #{{ dogodek.id }}</h3>
 	</div>
 	<table class="table movietable">
 		<tr>
 			<td>Ime</td>
-			<td>{{dogodek.name}}</td>
+			<td>{{ dogodek.name }}</td>
 		</tr>
 		<tr>
 			<td>Lokacija</td>
-			<td>{{dogodek.location}}</td>
+			<td>{{ dogodek.location }}</td>
 		</tr>
 		<tr>
 			<td>Čas</td>
-			<td>{{dogodek.time | date:'dd.MM.yyyy hh:mm'}}</td>
+			<td>{{ dogodek.time | date:'dd.MM.yyyy hh:mm' }}</td>
+		</tr>
+		<tr>
+			<td>Avtor</td>
+			<td>{{ dogodek.user.firstname }} {{ dogodek.user.firstname }}</td>
 		</tr>
 	</table>
+	<md-button class="md-raised" ng-click="urediDogodek(dogodek.id)">Uredi</md-button>
 	<md-button class="md-raised md-warn" ng-click="showConfirm($event)">Izbriši</md-button>
 </div>
+
+<style type="text/css">
+.md-button a {
+    text-decoration: none;
+    color: rgba(44, 65, 164, 0.96);
+}
+</style>

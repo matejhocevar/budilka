@@ -13,10 +13,20 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 			controller: 'DogodkiListCtrl',
 			controllerAs: 'dogodkiList'
 		})
-		.when('/dogodki/:dogodekId', {
+		.when('/dogodki/nov', {
+			templateUrl: 'dogodki/dogodekEdit.html',
+			controller: 'DogodekEditCtrl',
+			controllerAs: 'dogodekEdit'
+		})
+		.when('/dogodki/:id', {
 			templateUrl: 'dogodki/dogodek.html',
-			controller: 'DogodkiCtrl',
-			controllerAs: 'dogodki'
+			controller: 'DogodekCtrl',
+			controllerAs: 'dogodek'
+		})
+		.when('/dogodki/:id/edit', {
+			templateUrl: 'dogodki/dogodekEdit.html',
+			controller: 'DogodekEditCtrl',
+			controllerAs: 'dogodekEdit'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -58,12 +68,12 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 	this.params = $routeParams;
 
 }])
-.controller('DogodkiCtrl', function($routeParams, $scope, $location, Dogodki, $mdDialog) {
+.controller('DogodekCtrl', function($routeParams, $scope, $location, Dogodki, $mdDialog) {
 
-	this.name = "DogodkiCtrl";
+	this.name = "DogodekCtrl";
 	this.params = $routeParams;
 
-	Dogodki.get({ dogodekId: $routeParams.dogodekId }).$promise.then(function(dogodek) {
+	Dogodki.get({ id: $routeParams.id }).$promise.then(function(dogodek) {
 		$scope.dogodek = dogodek;
 	});
 
@@ -87,6 +97,10 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 			$location.path('/dogodki');
 		});
 	}
+
+	$scope.urediDogodek = function(id) {
+		$location.path('/dogodki/' + id + '/edit');
+	};
 
 })
 .controller('DogodkiListCtrl', function($routeParams, $scope, $location, Dogodki) {
@@ -152,4 +166,76 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 		$scope.dogodki = $scope.allDogodki.slice(begin, end);
 	});
 
+})
+.controller('DogodekEditCtrl', function($routeParams, $scope, $location, Dogodki, Uporabniki) {
+
+	this.name = "DogodekEditCtrl";
+	this.params = $routeParams;
+
+	$scope.uporabniki = Uporabniki.query(); //pridobi vse uporabnike
+
+	var now = new Date();
+	$scope.minDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+	if($routeParams.id) {
+		$scope.isNew = false;
+		Dogodki.get({ id: $routeParams.id }).$promise.then(function(dogodek) {
+			$scope.dogodek = dogodek;
+			$scope.eventName = dogodek.name;
+			$scope.eventDate = new Date(dogodek.time);
+			$scope.eventTime = new Date(dogodek.time);
+			$scope.eventLocation = dogodek.location;
+			$scope.eventUser = dogodek.user.id;
+		});
+	}
+	else {
+		$scope.isNew = true;
+		$scope.dogodek = new Dogodki();
+		$scope.eventDate = new Date();
+	}
+
+	$scope.saveDogodekCheck = function(){
+		if ($scope.eventName == null) {
+			return false;
+		}
+		if ($scope.eventDate == null) {
+			return false;
+		}
+		if ($scope.eventTime == null) {
+			return false;
+		}
+		if ($scope.eventlocation == null) {
+			return false;
+		}
+		if ($scope.eventUser == null) {
+			return false;
+		}
+		return true;
+	}
+
+	$scope.saveDogodek = function() {
+		$scope.dogodek.name = $scope.eventName;
+		var td = new Date($scope.eventTime);
+		var dd = new Date($scope.eventDate);
+		dd.setHours(td.getHours());
+		dd.setMinutes(td.getMinutes());
+		dd.setSeconds(td.getSeconds());
+		$scope.dogodek.time = dd.getTime();
+		$scope.dogodek.location = $scope.eventLocation;
+		
+		// Uporabniki.get({ uporabnikId: $scope.eventUser }).$promise.then(function(user) {
+		// 	$scope.dogodek.user = user;
+		// });
+		$scope.dogodek.user = null;
+		if($scope.isNew) {
+			Dogodki.save($scope.dogodek, function() {
+				$location.path('/dogodki');
+			});
+		}
+		else {
+			Dogodki.update($scope.dogodek, function() {
+				$location.path('/dogodki');
+			});
+		}	
+	}
 });

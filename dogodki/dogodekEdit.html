@@ -1,0 +1,58 @@
+<div ng-switch on="isNew">
+    <div ng-switch-when="true">
+        <h3>Dodaj nov dogodek </h3>
+    </div>
+    <div ng-switch-when="false">
+        <h3>Uredi dogodek </h3>
+    </div>
+</div>
+<form>
+	<div style="width:500px">
+		<h4>Ime dogodka</h4>
+		<md-input-container md-no-float="" class="md-block md-input-has-placeholder">
+			<input ng-model="eventName" placeholder="Ime dogodka" required>
+			<div class="md-errors-spacer"></div>
+		</md-input-container>
+	</div>
+	<h4>Vnesi čas dogodka</h4>
+	<div layout="row">
+		<div layout="column" class="flex">
+			<div ng-switch on="isNew">
+				<div ng-switch-when="true">
+					<md-datepicker ng-model="eventDate" md-placeholder="Vnesite datum" md-min-date="minDate" required></md-datepicker>
+				</div>
+				<div ng-switch-when="false">
+					<md-datepicker ng-model="eventDate" md-placeholder="Vnesite datum" required></md-datepicker>
+				</div>
+			</div>	
+		</div>
+		<div layout="column" class="flex">
+			<md-input-container md-no-float="" class="md-block md-input-has-placeholder">
+				<label>V formatu hh:mm</label>
+				<input type="time" ng-model="eventTime" min="00:00:00" max="23:59:59" placeholder="Ura dogodka" required/>
+			</md-input-container>
+		</div>
+	</div>
+	<div>
+		<h4>Lokacija dogodka</h4>
+		<md-input-container md-no-float="" class="md-block md-input-has-placeholder">
+			<input ng-model="eventLocation" placeholder="Lokacija dogodka" required>
+			<div class="md-errors-spacer"></div>
+		</md-input-container>
+	</div>
+	<div>
+		<h4>Izberi organizatorja dogodka</h4>
+		<md-input-container>
+			<label>Izberi organizatorja</label>
+			<md-select ng-model="eventUser" required>
+				<md-option ng-repeat="uporabnik in uporabniki" value="{{uporabnik.id}}" >{{uporabnik.firstname}} {{uporabnik.lastname}}</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+	<div>
+		<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+			<md-button class="md-raised md-primary" ng-click="saveDogodek()">Shrani</md-button>
+			<md-button class="md-raised md-warn" ng-href="#!/dogodki">Prekini</md-button>
+		</section>
+	</div>
+</form>
