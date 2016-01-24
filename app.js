@@ -13,6 +13,11 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 			controller: 'DogodkiListCtrl',
 			controllerAs: 'dogodkiList'
 		})
+		.when('/dogodki/:dogodekId', {
+			templateUrl: 'dogodki/dogodek.html',
+			controller: 'DogodkiCtrl',
+			controllerAs: 'dogodki'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -53,6 +58,37 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 	this.params = $routeParams;
 
 }])
+.controller('DogodkiCtrl', function($routeParams, $scope, $location, Dogodki, $mdDialog) {
+
+	this.name = "DogodkiCtrl";
+	this.params = $routeParams;
+
+	Dogodki.get({ dogodekId: $routeParams.dogodekId }).$promise.then(function(dogodek) {
+		$scope.dogodek = dogodek;
+	});
+
+	$scope.showConfirm = function(ev) {
+	// Appending dialog to document.body to cover sidenav in docs app
+		var confirm = $mdDialog.confirm()
+			.title('Ali res želiš izbrisati ta zapis?')
+			.textContent('Izbris bo trajno odstranjen.')
+			.ariaLabel('Izbris')
+			.targetEvent(ev)
+			.ok('Izbriši')
+			.cancel('Prekliči');
+			
+		$mdDialog.show(confirm).then(function() {
+			$scope.izbrisiDogodek();
+		}, function(){});
+	};
+
+	$scope.izbrisiDogodek = function(){
+		$scope.dogodek.$delete(function() {
+			$location.path('/dogodki');
+		});
+	}
+
+})
 .controller('DogodkiListCtrl', function($routeParams, $scope, $location, Dogodki) {
 
 	this.name = "DogodkiListCtrl";
@@ -61,8 +97,8 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 	$scope.allDogodki = []
 	$scope.pages = [1]
 	$scope.currentPage = 1
-	$scope.numPerPage = 5
-	$scope.maxSize = 5;
+	$scope.numPerPage = 10
+	$scope.maxSize = 10;
 
 	$scope.whatClassIsIt= function(someValue){
 		if(someValue==$scope.pages[0])
@@ -81,10 +117,8 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 
 		Dogodki.query({page: start, recordNum: $scope.numPerPage}, function(dogodki, getResponseHeaders) {
 
-			// $scope.dogodkiNum = 50;
 			$scope.dogodkiNum = getResponseHeaders("X-Total-Count");
-			console.log("Vseh dogodkov je: " + $scope.dogodkiNum);
-			
+
 			if($scope.allDogodki.length == 0) {
 				for(i = 0; i<$scope.dogodkiNum; i++) {
 					if(i>= start && i<start+$scope.numPerPage) {

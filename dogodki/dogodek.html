@@ -1,0 +1,20 @@
+<div align="center">
+	<div>
+		<h3>Details for Dogodek #{{dogodek.id}}</h3>
+	</div>
+	<table class="table movietable">
+		<tr>
+			<td>Ime</td>
+			<td>{{dogodek.name}}</td>
+		</tr>
+		<tr>
+			<td>Lokacija</td>
+			<td>{{dogodek.location}}</td>
+		</tr>
+		<tr>
+			<td>Čas</td>
+			<td>{{dogodek.time | date:'dd.MM.yyyy hh:mm'}}</td>
+		</tr>
+	</table>
+	<md-button class="md-raised md-warn" ng-click="showConfirm($event)">Izbriši</md-button>
+</div>
