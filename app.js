@@ -167,7 +167,7 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 	});
 
 })
-.controller('DogodekEditCtrl', function($routeParams, $scope, $location, Dogodki, Uporabniki) {
+.controller('DogodekEditCtrl', function($routeParams, $scope, $location, Dogodki, DogodkiSave, Uporabniki) {
 
 	this.name = "DogodekEditCtrl";
 	this.params = $routeParams;
@@ -239,12 +239,8 @@ app = angular.module('prpoFrontEnd', ['ngRoute', 'ngAnimate','ngMaterial','ngRes
 		$scope.dogodek.time = dd.getTime();
 		$scope.dogodek.location = $scope.eventLocation;
 		
-		// Uporabniki.get({ uporabnikId: $scope.eventUser }).$promise.then(function(user) {
-		// 	$scope.dogodek.user = user;
-		// });
-		$scope.dogodek.user = null;
 		if($scope.isNew) {
-			Dogodki.save($scope.dogodek, function() {
+			DogodkiSave.save({id: $scope.eventUser}, {time: $scope.dogodek.time, location: $scope.dogodek.location, name: $scope.dogodek.name} , function() {
 				$location.path('/dogodki');
 			});
 		}
